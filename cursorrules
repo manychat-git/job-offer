@@ -1,0 +1,100 @@
+# 🧠 HR Offer PDF Editor - Cursor Rules
+
+You are an expert in React, TypeScript, TailwindCSS, Shadcn UI, pdf-lib, html-to-image, and Framelink MCP integration.
+
+## 🧩 Context
+This is a web-based editor for HR teams to preview and export job offer documents as PDF, generated from pixel-perfect Figma design. Non-designers can update basic data (e.g. name, title, start date), instantly see the layout preview, and download a ready-to-print PDF.
+
+---
+
+## ⚙️ Technology Stack
+| Layer            | Tech                         |
+|------------------|------------------------------|
+| Framework        | React + Vite + TypeScript    |
+| Styling          | TailwindCSS + shadcn/ui      |
+| Fonts            | Custom fonts via @font-face  |
+| Design-to-Code   | Figma2Code / Framelink MCP   |
+| PDF Export       | html-to-image + pdf-lib      |
+| Deployment       | Client-only, e.g. Vercel     |
+
+---
+
+## 🎯 Project Goals
+1. Mirror Figma layout in Tailwind-based HTML
+2. Enable content update in real-time via props or form input
+3. Preserve pixel-precision of layout and spacing
+4. Ensure exported PDF looks **exactly like on-screen preview**
+5. Keep full control over layout with no server dependency
+
+---
+
+## 📏 Rules for Implementation
+
+### 🧱 Layout
+- Each PDF page is a fixed-size `div` in `A4` (595x842px)
+- Design dimensions from Figma (e.g., width: 415px) must be **preserved exactly**
+- Use Tailwind’s `[px]` arbitrary values to match Figma precisely
+- Avoid using relative units (%, em) — fixed values only
+
+### 🧬 Fonts & Styles
+- Load all fonts via `@font-face` in HTML
+- All fonts must match Figma font stack (e.g., Rooftop, Manychat Gravity)
+- Use Tailwind utility classes only (no inline `style`) except for rare fixes
+- Match:
+  - Font size
+  - Line height
+  - Letter spacing (if needed: use `tracking-tight`, or `[letter-spacing:-.01em]`)
+  - Colors exactly by HEX
+
+### 🖼️ Assets & Logos
+- Logos must be placed **inside defined Figma boxes**
+- Use `<img />` with `object-contain` and exact width/height
+- Match Figma placement **pixel-to-pixel**
+
+### 🧪 Preview-to-PDF
+- Use `html-to-image` to render preview block to canvas
+- Pass image to `pdf-lib` to embed into an A4-sized PDF
+- PDF must match screen preview 1:1
+- Ensure fonts and layout are not rasterized or compressed incorrectly
+
+### 🧩 Structure
+- Each page is a React component (e.g., `PageOne.tsx`)
+- Top-level container has exact size + padding from Figma
+- Dynamic values passed as props
+
+---
+
+## 💡 Editor Behavior
+- User sees live preview of offer (styled div)
+- Fills out form: name, title, start date, etc.
+- Preview updates in real-time
+- Button: `Download PDF` → captures DOM → converts to image → embeds to PDF → triggers download
+
+---
+
+## ✅ Coding Guidelines
+- Use functional React components
+- Prefer hooks and props over state management libs
+- Split layout into clear, readable parts
+- Use named exports and consistent folder structure
+- No class components, no styled-components
+
+---
+
+## 🚨 No-go Rules
+- ❌ No usage of @react-pdf/renderer — **not pixel-perfect**
+- ❌ No absolute positioning unless Figma demands it
+- ❌ No dynamic resizing, scaling or zoom-based hacks
+
+---
+
+## 🔄 Workflow Summary
+1. Extract layout from Figma manually or via MCP
+2. Implement layout in Tailwind (1 page = 1 component)
+3. Connect props (e.g., `name`, `title`, `salary`)
+4. Set up html-to-image + pdf-lib export
+5. Style preview exactly as design
+6. Test PDF vs preview — they must match exactly
+7. Done ✅
+
+⚡ Do not restart the dev server after changes — Vite provides hot module replacement (HMR) and updates automatically in real time.

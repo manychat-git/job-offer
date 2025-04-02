@@ -126,7 +126,7 @@ export function JobOfferPreview({ formData }) {
             </div>
             {/* Right Top Logo */}
             <div className="w-32 h-5 left-[431px] top-0 absolute overflow-hidden">
-              <img src="./images/logo-main.svg" alt="Circle Logo" className="w-32 h-5 object-contain" />
+              <img src="/images/logo-main.svg" alt="Circle Logo" className="w-32 h-5 object-contain" />
             </div>
           </div>
 
@@ -204,7 +204,7 @@ export function JobOfferPreview({ formData }) {
 
               {/* Bottom Left Logo */}
               <div className="w-12 h-12 relative">
-                <img src="./images/logo-circle.svg" alt="Main Logo" className="w-12 h-12 object-contain" />
+                <img src="/images/logo-circle.svg" alt="Main Logo" className="w-12 h-12 object-contain" />
               </div>
             </div>
 

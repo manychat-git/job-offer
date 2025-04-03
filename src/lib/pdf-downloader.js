@@ -2,8 +2,13 @@ import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { getFontEmbedSettings } from './font-utils';
 
+// Глобальная переменная для хранения текущей страницы во время генерации PDF
+window.pdfCurrentPage = 1;
+
 export async function downloadPdf() {
   try {
+    const originalPage = window.pdfCurrentPage; // Запоминаем текущую страницу
+    
     // Ensure fonts are loaded and ready before conversion
     await document.fonts.ready;
     
@@ -17,8 +22,20 @@ export async function downloadPdf() {
       format: 'a4'
     });
 
+    // Вызываем событие для установки страницы
+    const pdfPageChangeEvent = new CustomEvent('pdfPageChange');
+
     // Для каждой страницы
     for (let i = 1; i <= 5; i++) {
+      // Устанавливаем глобальную переменную для текущей страницы
+      window.pdfCurrentPage = i;
+      
+      // Вызываем событие, которое будет перехвачено в React-компоненте
+      window.dispatchEvent(pdfPageChangeEvent);
+      
+      // Подождать, пока React обновит DOM
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
       // Найти элемент страницы
       const pageElement = document.querySelector('.pdf-page');
       
@@ -26,15 +43,6 @@ export async function downloadPdf() {
         console.error('PDF page element not found');
         return;
       }
-
-      // Временно изменить данные страницы для конвертации
-      const previewComponent = document.querySelector('[data-preview-page]');
-      if (previewComponent) {
-        previewComponent.setAttribute('data-current-page', i);
-      }
-      
-      // Подождать, пока React обновит DOM
-      await new Promise(resolve => setTimeout(resolve, 100));
       
       // Convert the HTML to high-quality PNG
       const dataUrl = await toPng(pageElement, { 
@@ -56,12 +64,10 @@ export async function downloadPdf() {
         pdf.addPage();
       }
     }
-
-    // Вернуть атрибут текущей страницы в исходное состояние
-    const previewComponent = document.querySelector('[data-preview-page]');
-    if (previewComponent) {
-      previewComponent.setAttribute('data-current-page', '1');
-    }
+    
+    // Восстанавливаем исходную страницу
+    window.pdfCurrentPage = originalPage;
+    window.dispatchEvent(pdfPageChangeEvent);
     
     // Download the PDF
     pdf.save('job-offer.pdf');

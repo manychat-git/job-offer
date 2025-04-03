@@ -130,7 +130,7 @@ export const components = {
     },
     card: {
       backgroundColor: colors.neutral.white,
-      borderRadius: "1.5rem", // rounded-3xl
+      borderRadius: "0.5rem", // rounded-lg
       padding: {
         x: "1.25rem", // px-5
         y: "1rem", // py-4

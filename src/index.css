@@ -2,25 +2,25 @@
 
 /* Define the Shadcn UI CSS Variables */
 :root {
-  --background: hsl(224 71% 4%);
-  --foreground: hsl(213 31% 91%);
-  --muted: hsl(223 47% 11%);
-  --muted-foreground: hsl(215.4 16.3% 56.9%);
-  --accent: hsl(216 34% 17%);
-  --accent-foreground: hsl(210 40% 98%);
-  --popover: hsl(224 71% 4%);
-  --popover-foreground: hsl(215 20.2% 65.1%);
-  --border: hsl(216 34% 17%);
-  --input: hsl(216 34% 17%);
-  --card: hsl(224 71% 4%);
-  --card-foreground: hsl(213 31% 91%);
-  --primary: hsl(210 40% 98%);
-  --primary-foreground: hsl(222.2 47.4% 1.2%);
-  --secondary: hsl(222.2 47.4% 11.2%);
-  --secondary-foreground: hsl(210 40% 98%);
-  --destructive: hsl(0 63% 31%);
-  --destructive-foreground: hsl(210 40% 98%);
-  --ring: hsl(216 34% 17%);
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --card: transparent;
+  --card-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.552 0.016 285.938);
   --radius: 0.5rem;
 }
 
@@ -99,9 +99,11 @@
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
     --ring: oklch(0.552 0.016 285.938);
-    --radius: 1rem;
+    --radius: 0.5rem;
   }
 }
+
+/* Удаляем все связанное с превью и масштабированием */
 
 .dark {
   --background: oklch(0.141 0.005 285.823);

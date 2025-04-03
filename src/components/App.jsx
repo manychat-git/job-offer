@@ -34,9 +34,9 @@ export function App() {
           <p className="text-muted-foreground">Edit the fields below to customize the job offer</p>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start justify-center">
+        <div className="flex flex-col lg:flex-row gap-8 items-start justify-center max-w-[1400px] mx-auto">
           {/* Form */}
-          <div className="w-full lg:w-1/3">
+          <div className="w-full lg:w-[400px] flex-shrink-0">
             <JobOfferForm 
               formData={formData} 
               onChange={handleFormChange}
@@ -45,10 +45,8 @@ export function App() {
           </div>
 
           {/* Preview */}
-          <div className="w-full lg:w-2/3 flex flex-col items-center">
-            <div className="pdf-preview-container shadow-xl">
-              <JobOfferPreview formData={formData} />
-            </div>
+          <div className="w-full lg:w-[650px] flex-shrink-0">
+            <JobOfferPreview formData={formData} />
           </div>
         </div>
       </div>

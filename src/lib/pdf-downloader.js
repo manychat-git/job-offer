@@ -1,4 +1,4 @@
-import { toPng } from 'html-to-image';
+import { toJpeg } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { getFontEmbedSettings } from './font-utils';
 
@@ -44,9 +44,9 @@ export async function downloadPdf() {
         return;
       }
       
-      // Convert the HTML to high-quality PNG
-      const dataUrl = await toPng(pageElement, { 
-        quality: 1.0,
+      // Convert the HTML to high-quality JPEG
+      const dataUrl = await toJpeg(pageElement, { 
+        quality: 1.0, // Slightly reduced quality for better compression while maintaining high quality
         pixelRatio: 4,
         ...fontSettings
       });
@@ -57,7 +57,7 @@ export async function downloadPdf() {
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       
       // Add the image to PDF
-      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.addImage(dataUrl, 'JPEG', 0, 0, pdfWidth, pdfHeight);
       
       // Add new page if not last page
       if (i < 5) {

@@ -13,7 +13,7 @@ import {
   PaginationPrevious,
 } from "./ui/pagination";
 
-import { Page1, Page2, Page3, Page4, Page5 } from './pdf-pages-new';
+import { Page1, Page2, Page3, Page4, Page5 } from './pdf-pages';
 import PageContainer from './pdf/atoms/PageContainer';
 import { CompanyProvider } from './pdf/molecules/PageFooter';
 

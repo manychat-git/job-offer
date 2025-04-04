@@ -299,18 +299,12 @@ export function JobOfferForm({ formData = defaultFormData, onChange, onDownload 
                 </div>
                 {safeFormData.jobData.annualBonus.isVisible && (
                   <div className="px-4 pb-4">
-                    <div className="flex gap-2">
-                      <Input
-                        name="annualBonus"
-                        value={safeFormData.jobData.annualBonus.value}
-                        onChange={(e) => handleOptionalFieldChange('annualBonus', e.target.value)}
-                        placeholder="e.g. 10,000"
-                        className="flex-1"
-                      />
-                      <div className="w-[100px] flex items-center justify-center text-sm text-muted-foreground border rounded-md">
-                        {safeFormData.jobData.currency}
-                      </div>
-                    </div>
+                    <Input
+                      name="annualBonus"
+                      value={safeFormData.jobData.annualBonus.value}
+                      onChange={(e) => handleOptionalFieldChange('annualBonus', e.target.value)}
+                      placeholder="e.g. 10,000"
+                    />
                   </div>
                 )}
               </div>

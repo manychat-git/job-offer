@@ -10,13 +10,15 @@ const PageTitle = ({
     className={`
       ${width}
       justify-start
-      text-7xl
       font-black
       font-['Manychat_Gravity']
-      leading-[62.80px]
       ${className}
     `.replace(/\s+/g, ' ').trim()}
-    style={style}
+    style={{
+      fontSize: '78.50px',
+      lineHeight: '80%',
+      ...style
+    }}
   >
     {children}
   </div>

@@ -96,7 +96,7 @@ export const BENEFITS = {
     },
     {
       emoji: "👋",
-      title: "Team building\nevents",
+      title: "Team building events",
       description: "Bond with your colleagues—get to know your team through enjoyable activities, lunches, and outings."
     },
     {

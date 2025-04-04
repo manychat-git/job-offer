@@ -78,12 +78,11 @@ function WhyJoinEditor({ statistics, onUpdate }) {
   }, [editingIndex, editedItem]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Why Join ManyChat</CardTitle>
-        <CardDescription>Edit company statistics and facts</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="space-y-8">
+      <div className="mb-4">
+        <h2 className="text-2xl font-semibold tracking-tight">Why Join Manychat</h2>
+      </div>
+      <div className="space-y-4">
         {statistics.map((item, index) => (
           <div key={index} className="relative p-4 border rounded-lg group" data-card-index={index}>
             {editingIndex === index ? (
@@ -168,107 +167,199 @@ function WhyJoinEditor({ statistics, onUpdate }) {
         ))}
         <Button 
           onClick={handleAdd}
-          variant="outline"
-          className="w-full"
+          className="w-fit"
+          variant="secondary"
         >
           Add New Fact
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
 function BenefitsEditor({ benefits, onUpdate }) {
   const [selectedLocation, setSelectedLocation] = useState(Object.keys(benefits)[0]);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editedItem, setEditedItem] = useState(null);
+
+  // Находим label локации по value
+  const getLocationLabel = (value) => {
+    const location = LOCATIONS.find(loc => loc.value === value);
+    return location ? location.label : value;
+  };
+
+  const handleEdit = (index) => {
+    setEditingIndex(index);
+    setEditedItem({ ...benefits[selectedLocation][index] });
+  };
+
+  const handleSave = (index) => {
+    if (!editedItem?.emoji?.trim() && !editedItem?.title?.trim() && !editedItem?.description?.trim()) {
+      handleDelete(index);
+      return;
+    }
+    
+    const newBenefits = { ...benefits };
+    newBenefits[selectedLocation][index] = editedItem;
+    onUpdate(newBenefits);
+    setEditingIndex(null);
+    setEditedItem(null);
+  };
+
+  const handleDelete = (index) => {
+    const newBenefits = { ...benefits };
+    newBenefits[selectedLocation] = newBenefits[selectedLocation].filter((_, i) => i !== index);
+    onUpdate(newBenefits);
+  };
+
+  const handleAdd = () => {
+    const newBenefits = { ...benefits };
+    newBenefits[selectedLocation] = [
+      ...newBenefits[selectedLocation],
+      { emoji: '✨', title: '', description: '' }
+    ];
+    onUpdate(newBenefits);
+    handleEdit(newBenefits[selectedLocation].length - 1);
+  };
+
+  // Обработчик клика вне карточки
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (editingIndex !== null) {
+        const cardElement = document.querySelector(`[data-card-index="${editingIndex}"]`);
+        if (cardElement && !cardElement.contains(event.target)) {
+          handleSave(editingIndex);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [editingIndex, editedItem]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Location Benefits</CardTitle>
-        <CardDescription>Edit benefits for each location</CardDescription>
+    <div className="space-y-8">
+      <div className="mb-4">
+        <h2 className="text-2xl font-semibold tracking-tight">Benefits</h2>
+      </div>
+      
+      <div className="w-full max-w-xs">
         <Select value={selectedLocation} onValueChange={setSelectedLocation}>
           <SelectTrigger>
-            <SelectValue placeholder="Select location" />
+            <SelectValue placeholder="Select location">
+              {getLocationLabel(selectedLocation)}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {Object.keys(benefits).map((location) => (
               <SelectItem key={location} value={location}>
-                {location}
+                {getLocationLabel(location)}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-      </CardHeader>
-      <CardContent className="space-y-4">
+      </div>
+
+      <div className="space-y-4">
         {selectedLocation && benefits[selectedLocation].map((benefit, index) => (
-          <div key={index} className="space-y-2 p-4 border rounded-lg">
-            <div className="flex items-center gap-2">
-              <Label className="w-24">Emoji:</Label>
-              <Input
-                value={benefit.emoji}
-                onChange={(e) => {
-                  const newBenefits = { ...benefits };
-                  newBenefits[selectedLocation][index] = {
-                    ...benefit,
-                    emoji: e.target.value
-                  };
-                  onUpdate(newBenefits);
-                }}
-                className="w-20"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Label className="w-24">Title:</Label>
-              <Input
-                value={benefit.title}
-                onChange={(e) => {
-                  const newBenefits = { ...benefits };
-                  newBenefits[selectedLocation][index] = {
-                    ...benefit,
-                    title: e.target.value
-                  };
-                  onUpdate(newBenefits);
-                }}
-                className="flex-1"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <Label className="w-24">Description:</Label>
-              <Input
-                value={benefit.description}
-                onChange={(e) => {
-                  const newBenefits = { ...benefits };
-                  newBenefits[selectedLocation][index] = {
-                    ...benefit,
-                    description: e.target.value
-                  };
-                  onUpdate(newBenefits);
-                }}
-                className="flex-1"
-              />
-            </div>
+          <div key={index} className="relative p-4 border rounded-lg group" data-card-index={index}>
+            {editingIndex === index ? (
+              <div className="space-y-4">
+                <div className="flex gap-2">
+                  <Input
+                    value={editedItem.emoji}
+                    onChange={(e) => setEditedItem({ ...editedItem, emoji: e.target.value })}
+                    className="w-20"
+                    placeholder="Emoji"
+                  />
+                  <Input
+                    value={editedItem.title}
+                    onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
+                    className="flex-1"
+                    placeholder="Enter title"
+                  />
+                </div>
+                <Textarea
+                  value={editedItem.description}
+                  onChange={(e) => setEditedItem({ ...editedItem, description: e.target.value })}
+                  className="min-h-[100px] resize-none"
+                  placeholder="Enter the description..."
+                />
+                <Button 
+                  variant="ghost"
+                  onClick={() => handleSave(index)}
+                  className="w-full"
+                >
+                  Save
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <h4 className="font-medium mb-2">
+                  <span className="mr-2">{benefit.emoji}</span>
+                  {benefit.title}
+                </h4>
+                <p className="text-sm text-gray-600 whitespace-pre-wrap">{benefit.description}</p>
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => handleEdit(index)}
+                    className="h-8 w-8"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-4 h-4"
+                    >
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                      <path d="m15 5 4 4" />
+                    </svg>
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => handleDelete(index)}
+                    className="h-8 w-8 text-red-500 hover:text-red-600"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-4 h-4"
+                    >
+                      <path d="M3 6h18" />
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    </svg>
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
         <div className="flex gap-2">
           <Button 
-            onClick={() => {
-              const newBenefits = { ...benefits };
-              newBenefits[selectedLocation] = [
-                ...newBenefits[selectedLocation],
-                { emoji: '✨', title: '', description: '' }
-              ];
-              onUpdate(newBenefits);
-            }}
-            className="flex-1"
+            onClick={handleAdd}
+            className="w-fit"
+            variant="secondary"
           >
             Add New Benefit
           </Button>
-          <Button variant="outline" className="flex-1">
-            Copy from other location
-          </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
@@ -350,6 +441,7 @@ export function ContentEditor() {
                 <Button 
                   onClick={() => handleOtherSettingsUpdate('locations', [...editedContent.locations, { value: '', label: '' }])}
                   className="w-fit mt-4"
+                  variant="secondary"
                 >
                   Add Location
                 </Button>
@@ -409,6 +501,7 @@ export function ContentEditor() {
               <Button 
                 onClick={() => handleOtherSettingsUpdate('currencies', [...editedContent.currencies, { value: '', label: '' }])}
                 className="w-fit mt-4"
+                variant="secondary"
               >
                 Add Currency
               </Button>
@@ -417,44 +510,62 @@ export function ContentEditor() {
         );
       case 'companies':
         return (
-          <Card>
-            <CardHeader>
-              <CardTitle>Companies</CardTitle>
-              <CardDescription>Company entities</CardDescription>
-            </CardHeader>
-            <CardContent>
+          <div>
+            <div className="mb-4">
+              <h2 className="text-2xl font-semibold tracking-tight">Companies</h2>
+            </div>
+            <div className="space-y-2">
               {editedContent.companies.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 mb-2">
-                  <Input
-                    value={item.value}
-                    onChange={(e) => {
-                      const newCompanies = [...editedContent.companies];
-                      newCompanies[index] = { ...item, value: e.target.value };
-                      handleOtherSettingsUpdate('companies', newCompanies);
-                    }}
-                    className="flex-1"
-                    placeholder="Company value"
-                  />
+                <div key={index} className="flex items-center gap-2">
                   <Input
                     value={item.label}
                     onChange={(e) => {
                       const newCompanies = [...editedContent.companies];
-                      newCompanies[index] = { ...item, label: e.target.value };
+                      const value = e.target.value.toLowerCase().replace(/\s+/g, '-');
+                      newCompanies[index] = { 
+                        value: value,
+                        label: e.target.value 
+                      };
                       handleOtherSettingsUpdate('companies', newCompanies);
                     }}
                     className="flex-1"
-                    placeholder="Company label"
+                    placeholder="Enter company name"
                   />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      const newCompanies = editedContent.companies.filter((_, i) => i !== index);
+                      handleOtherSettingsUpdate('companies', newCompanies);
+                    }}
+                    className="h-8 w-8 text-red-500 hover:text-red-600"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-4 h-4"
+                    >
+                      <path d="M3 6h18" />
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    </svg>
+                  </Button>
                 </div>
               ))}
               <Button 
                 onClick={() => handleOtherSettingsUpdate('companies', [...editedContent.companies, { value: '', label: '' }])}
-                className="w-full mt-2"
+                className="w-fit mt-4"
+                variant="secondary"
               >
                 Add Company
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         );
       case 'why-join':
         return (

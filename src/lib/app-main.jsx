@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { JobOfferForm } from '../components/JobOfferForm';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { App } from '../components/App';
 import { preloadFonts } from './font-utils';
 import { downloadPdf } from './pdf-downloader.js';
 import { ContentEditor } from '../components/ContentEditor';
+
+// Preload fonts for better rendering
+preloadFonts();
 
 // Убедимся, что документ имеет класс dark
 document.documentElement.classList.add('dark');
@@ -13,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize React App
   const container = document.getElementById('app-root');
   if (container) {
-    const root = ReactDOM.createRoot(container);
+    const root = createRoot(container);
     root.render(
       <React.StrictMode>
         <App />
@@ -42,32 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
 
-function App() {
-  const [isEditorOpen, setIsEditorOpen] = useState(false);
-
-  useEffect(() => {
-    // Загружаем шрифты
-    preloadFonts();
-
-    // Добавляем обработчик для кнопки Edit Content
-    const editButton = document.getElementById('edit-content-button');
-    if (editButton) {
-      editButton.addEventListener('click', () => setIsEditorOpen(true));
-    }
-
-    return () => {
-      if (editButton) {
-        editButton.removeEventListener('click', () => setIsEditorOpen(true));
-      }
-    };
-  }, []);
-
-  return (
-    <>
-      <JobOfferForm />
-      <ContentEditor open={isEditorOpen} onOpenChange={setIsEditorOpen} />
-    </>
-  );
-} 
+  // Render the content editor
+  const editorRoot = document.getElementById('content-editor-root');
+  if (editorRoot) {
+    const editorRootNode = createRoot(editorRoot);
+    editorRootNode.render(<ContentEditor />);
+  } else {
+    console.error('Container element #content-editor-root not found');
+  }
+}); 

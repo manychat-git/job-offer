@@ -3,35 +3,44 @@
 /* Define font faces */
 @font-face {
   font-family: 'Manychat_Gravity';
-  src: url('/fonts/Manychat_Gravity.otf') format('opentype');
-  font-weight: normal;
+  src: local('Manychat_Gravity'),
+       url('/fonts/Manychat_Gravity.otf') format('opentype'),
+       url('/fonts/Manychat_Gravity.otf') format('truetype');
+  font-weight: 900;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 1 1000;
 }
 
 @font-face {
   font-family: 'Rooftop';
-  src: url('/fonts/Rooftop-Regular.ttf') format('truetype');
+  src: local('Rooftop'),
+       url('/fonts/Rooftop-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
   font-family: 'CoFo_Sans_Mono';
-  src: url('/fonts/CoFoSansMono-Regular.woff2') format('woff2');
+  src: local('CoFo_Sans_Mono'),
+       url('/fonts/CoFoSansMono-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 /* Safari-specific font rendering fix */
 @media not all and (min-resolution:.001dpcm) { 
   @supports (-webkit-appearance:none) {
-    .font-\[\'Manychat_Gravity\'\] { 
-      font-family: 'Manychat_Gravity' !important;
+    .font-\[\'Manychat_Gravity\'\],
+    .font-manychatGravity { 
+      font-family: 'Manychat_Gravity', sans-serif !important;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
     }
   }
 }

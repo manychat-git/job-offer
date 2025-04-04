@@ -53,11 +53,21 @@ function WhyJoinEditor({ statistics, onUpdate }) {
   const handleDelete = (index) => {
     const newStats = statistics.filter((_, i) => i !== index);
     onUpdate(newStats);
+    setEditingIndex(null);
+    setEditedItem(null);
   };
 
   const handleAdd = () => {
-    onUpdate([...statistics, { title: '', description: '' }]);
-    handleEdit(statistics.length);
+    setEditingIndex(statistics.length);
+    setEditedItem({ title: '', description: '' });
+  };
+
+  const handleCancel = (index) => {
+    if (index === statistics.length) {
+      handleDelete(index);
+    }
+    setEditingIndex(null);
+    setEditedItem(null);
   };
 
   // Обработчик клика вне карточки
@@ -103,10 +113,7 @@ function WhyJoinEditor({ statistics, onUpdate }) {
                   <Button 
                     variant="ghost"
                     size="sm"
-                    onClick={() => {
-                      setEditingIndex(null);
-                      setEditedItem(null);
-                    }}
+                    onClick={() => handleCancel(index)}
                   >
                     Cancel
                   </Button>
@@ -172,6 +179,46 @@ function WhyJoinEditor({ statistics, onUpdate }) {
             )}
           </div>
         ))}
+        {editingIndex === statistics.length && (
+          <div className="relative p-4 border rounded-lg group" data-card-index={statistics.length}>
+            <div className="space-y-4">
+              <Input
+                value={editedItem.title}
+                onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
+                className="flex-1"
+                placeholder="Enter title"
+              />
+              <Textarea
+                value={editedItem.description}
+                onChange={(e) => setEditedItem({ ...editedItem, description: e.target.value })}
+                className="min-h-[100px] resize-none"
+                placeholder="Enter the description..."
+              />
+              <div className="flex justify-end gap-2">
+                <Button 
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleCancel(statistics.length)}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    if (editedItem?.title?.trim() || editedItem?.description?.trim()) {
+                      onUpdate([...statistics, editedItem]);
+                    }
+                    setEditingIndex(null);
+                    setEditedItem(null);
+                  }}
+                >
+                  Save
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
         <Button 
           onClick={handleAdd}
           className="w-fit"
@@ -217,16 +264,21 @@ function BenefitsEditor({ benefits, onUpdate }) {
     const newBenefits = { ...benefits };
     newBenefits[selectedLocation] = newBenefits[selectedLocation].filter((_, i) => i !== index);
     onUpdate(newBenefits);
+    setEditingIndex(null);
+    setEditedItem(null);
   };
 
   const handleAdd = () => {
-    const newBenefits = { ...benefits };
-    newBenefits[selectedLocation] = [
-      ...newBenefits[selectedLocation],
-      { emoji: '✨', title: '', description: '' }
-    ];
-    onUpdate(newBenefits);
-    handleEdit(newBenefits[selectedLocation].length - 1);
+    setEditingIndex(benefits[selectedLocation].length);
+    setEditedItem({ emoji: '✨', title: '', description: '' });
+  };
+
+  const handleCancel = (index) => {
+    if (index === benefits[selectedLocation].length) {
+      handleDelete(index);
+    }
+    setEditingIndex(null);
+    setEditedItem(null);
   };
 
   // Обработчик клика вне карточки
@@ -298,10 +350,7 @@ function BenefitsEditor({ benefits, onUpdate }) {
                   <Button 
                     variant="ghost"
                     size="sm"
-                    onClick={() => {
-                      setEditingIndex(null);
-                      setEditedItem(null);
-                    }}
+                    onClick={() => handleCancel(index)}
                   >
                     Cancel
                   </Button>
@@ -368,15 +417,63 @@ function BenefitsEditor({ benefits, onUpdate }) {
             )}
           </div>
         ))}
-        <div className="flex gap-2">
-          <Button 
-            onClick={handleAdd}
-            className="w-fit"
-            variant="secondary"
-          >
-            Add New Benefit
-          </Button>
-        </div>
+        {editingIndex === benefits[selectedLocation].length && (
+          <div className="relative p-4 border rounded-lg group" data-card-index={benefits[selectedLocation].length}>
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <Input
+                  value={editedItem.emoji}
+                  onChange={(e) => setEditedItem({ ...editedItem, emoji: e.target.value })}
+                  className="w-20"
+                  placeholder="Emoji"
+                />
+                <Input
+                  value={editedItem.title}
+                  onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
+                  className="flex-1"
+                  placeholder="Enter title"
+                />
+              </div>
+              <Textarea
+                value={editedItem.description}
+                onChange={(e) => setEditedItem({ ...editedItem, description: e.target.value })}
+                className="min-h-[100px] resize-none"
+                placeholder="Enter the description..."
+              />
+              <div className="flex justify-end gap-2">
+                <Button 
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleCancel(benefits[selectedLocation].length)}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    if (editedItem?.emoji?.trim() || editedItem?.title?.trim() || editedItem?.description?.trim()) {
+                      const newBenefits = { ...benefits };
+                      newBenefits[selectedLocation] = [...newBenefits[selectedLocation], editedItem];
+                      onUpdate(newBenefits);
+                    }
+                    setEditingIndex(null);
+                    setEditedItem(null);
+                  }}
+                >
+                  Save
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        <Button 
+          onClick={handleAdd}
+          className="w-fit"
+          variant="secondary"
+        >
+          Add New Benefit
+        </Button>
       </div>
     </div>
   );

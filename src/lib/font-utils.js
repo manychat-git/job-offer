@@ -6,17 +6,17 @@
 const fonts = [
   {
     name: 'Manychat_Gravity',
-    url: './fonts/Manychat_Gravity.otf',
+    url: '/fonts/Manychat_Gravity.otf',
     format: 'opentype'
   },
   {
     name: 'Rooftop',
-    url: './fonts/Rooftop-Regular.ttf',
+    url: '/fonts/Rooftop-Regular.ttf',
     format: 'truetype'
   },
   {
     name: 'CoFo_Sans_Mono',
-    url: './fonts/CoFoSansMono-Regular.woff2',
+    url: '/fonts/CoFoSansMono-Regular.woff2',
     format: 'woff2'
   },
   {

@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from '../components/App';
+import { JobOfferForm } from '../components/JobOfferForm';
 import { preloadFonts } from './font-utils';
 import { downloadPdf } from './pdf-downloader.js';
-
-// Preload fonts for better rendering
-preloadFonts();
+import { ContentEditor } from '../components/ContentEditor';
 
 // Убедимся, что документ имеет класс dark
 document.documentElement.classList.add('dark');
@@ -44,4 +42,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-}); 
+});
+
+function App() {
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+
+  useEffect(() => {
+    // Загружаем шрифты
+    preloadFonts();
+
+    // Добавляем обработчик для кнопки Edit Content
+    const editButton = document.getElementById('edit-content-button');
+    if (editButton) {
+      editButton.addEventListener('click', () => setIsEditorOpen(true));
+    }
+
+    return () => {
+      if (editButton) {
+        editButton.removeEventListener('click', () => setIsEditorOpen(true));
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      <JobOfferForm />
+      <ContentEditor open={isEditorOpen} onOpenChange={setIsEditorOpen} />
+    </>
+  );
+} 

@@ -7,11 +7,18 @@ import { colors } from '../lib/styleConfig';
 export function App() {
   const [formData, setFormData] = useState({
     name: '',
-    jobTitle: 'Frontend Engineer',
-    startDate: 'January 2025',
-    location: 'Barcelona, Spain',
-    salary: '000 EUR',
-    probationPeriod: '3 months'
+    company: 'manychat_sl',
+    jobData: {
+      jobTitle: 'Frontend Engineer',
+      startDate: 'January 2025',
+      location: 'barcelona',
+      salary: '000',
+      currency: 'EUR',
+      probationPeriod: { value: '3 months', isVisible: true },
+      signInBonus: { value: '000', isVisible: false },
+      stockOptions: { value: 'Value', isVisible: false },
+      annualBonus: { value: '000', isVisible: false }
+    }
   });
 
   const handleFormChange = (newData) => {
@@ -46,7 +53,11 @@ export function App() {
 
           {/* Preview */}
           <div className="w-full lg:w-[650px] flex-shrink-0">
-            <JobOfferPreview formData={formData} />
+            <JobOfferPreview 
+              name={formData.name}
+              jobData={formData.jobData}
+              company={formData.company}
+            />
           </div>
         </div>
       </div>

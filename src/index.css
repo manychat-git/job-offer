@@ -1,5 +1,41 @@
 @import "tailwindcss";
 
+/* Define font faces */
+@font-face {
+  font-family: 'Manychat_Gravity';
+  src: url('/fonts/Manychat_Gravity.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rooftop';
+  src: url('/fonts/Rooftop-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CoFo_Sans_Mono';
+  src: url('/fonts/CoFoSansMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Safari-specific font rendering fix */
+@media not all and (min-resolution:.001dpcm) { 
+  @supports (-webkit-appearance:none) {
+    .font-\[\'Manychat_Gravity\'\] { 
+      font-family: 'Manychat_Gravity' !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+}
+
 /* Define the Shadcn UI CSS Variables */
 :root {
   --background: oklch(0.141 0.005 285.823);

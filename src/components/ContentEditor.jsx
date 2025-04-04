@@ -87,30 +87,37 @@ function WhyJoinEditor({ statistics, onUpdate }) {
           <div key={index} className="relative p-4 border rounded-lg group" data-card-index={index}>
             {editingIndex === index ? (
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Title</Label>
-                  <Input
-                    value={editedItem.title}
-                    onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
-                    className="flex-1"
-                  />
+                <Input
+                  value={editedItem.title}
+                  onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
+                  className="flex-1"
+                  placeholder="Enter title"
+                />
+                <Textarea
+                  value={editedItem.description}
+                  onChange={(e) => setEditedItem({ ...editedItem, description: e.target.value })}
+                  className="min-h-[100px] resize-none"
+                  placeholder="Enter the description..."
+                />
+                <div className="flex justify-end gap-2">
+                  <Button 
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setEditingIndex(null);
+                      setEditedItem(null);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => handleSave(index)}
+                  >
+                    Save
+                  </Button>
                 </div>
-                <div className="space-y-2">
-                  <Label>Description</Label>
-                  <Textarea
-                    value={editedItem.description}
-                    onChange={(e) => setEditedItem({ ...editedItem, description: e.target.value })}
-                    className="min-h-[100px] resize-none"
-                    placeholder="Enter the description..."
-                  />
-                </div>
-                <Button 
-                  variant="ghost"
-                  onClick={() => handleSave(index)}
-                  className="w-full"
-                >
-                  Save
-                </Button>
               </div>
             ) : (
               <div>
@@ -287,13 +294,25 @@ function BenefitsEditor({ benefits, onUpdate }) {
                   className="min-h-[100px] resize-none"
                   placeholder="Enter the description..."
                 />
-                <Button 
-                  variant="ghost"
-                  onClick={() => handleSave(index)}
-                  className="w-full"
-                >
-                  Save
-                </Button>
+                <div className="flex justify-end gap-2">
+                  <Button 
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setEditingIndex(null);
+                      setEditedItem(null);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => handleSave(index)}
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
             ) : (
               <div>

@@ -96,7 +96,7 @@ const Page2 = ({
         </div>
       </div>
 
-      <div className="self-stretch flex flex-col justify-start items-start gap-2.5">
+      <div className="self-stretch flex flex-col justify-start items-start">
         <div className="self-stretch flex flex-col justify-start items-start gap-0.5">
           <WelcomeMessage name={name} />
           

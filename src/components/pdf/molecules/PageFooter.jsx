@@ -26,7 +26,7 @@ const PageFooter = ({
   const companyLabel = COMPANIES.find(comp => comp.value === company)?.label || "Manychat S.L.";
 
   return (
-    <div className="self-stretch inline-flex flex-col justify-start items-start gap-3">
+    <div className="self-stretch inline-flex flex-col justify-start items-start gap-3 mt-[10px] -mb-2">
       <Divider />
       <div className={`
         self-stretch 

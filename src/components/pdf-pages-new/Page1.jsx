@@ -20,7 +20,7 @@ const Page1 = () => {
         Your<br/>job<br/>offer
       </div>
 
-      <div className="self-stretch flex flex-col justify-start items-start gap-2.5">
+      <div className="self-stretch flex flex-col justify-start items-start">
         <div className="w-[555px] h-[99px]">
           <Logo />
         </div>

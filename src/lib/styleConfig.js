@@ -137,6 +137,97 @@ export const components = {
       },
     },
   },
+
+  // PDF компоненты
+  pdf: {
+    // Базовый контейнер страницы PDF
+    pageContainer: {
+      width: "595px",
+      height: "842px",
+      backgroundColor: colors.brand.white,
+      padding: "2rem",
+      display: "flex",
+      flexDirection: "column",
+    },
+    
+    // Специфичные стили для первой страницы
+    page1: {
+      container: {
+        width: "595px",
+        height: "842px",
+        padding: "1.25rem",
+        backgroundColor: colors.brand.amethyst,
+        display: "inline-flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+      },
+      title: {
+        width: "553px",
+        color: colors.brand.vividOrange,
+        fontSize: "157px",
+        fontFamily: typography.fonts.manychatGravity,
+        fontWeight: 900,
+        lineHeight: "125.60px",
+      },
+      footer: {
+        text: {
+          color: colors.brand.white,
+          fontSize: "0.75rem",
+          fontFamily: typography.fonts.cofoSansMono,
+          lineHeight: "0.75rem",
+          textTransform: "uppercase",
+        },
+        confidential: {
+          color: colors.brand.white,
+          fontSize: "0.5rem",
+          fontFamily: typography.fonts.rooftop,
+          lineHeight: "0.75rem",
+        },
+        divider: {
+          stroke: colors.brand.white,
+          strokeWidth: "0.664725",
+        }
+      }
+    },
+    
+    // Заголовок страницы PDF
+    pageTitle: {
+      fontFamily: typography.fonts.manychatGravity,
+      fontSize: "2.5rem",
+      fontWeight: 900,
+      color: colors.brand.black,
+      marginBottom: "1.5rem",
+    },
+
+    // Информационная карточка
+    infoCard: {
+      backgroundColor: colors.brand.white,
+      border: `1px solid ${colors.brand.black}`,
+      borderRadius: "0.5rem",
+      padding: "1rem",
+      marginBottom: "1rem",
+    },
+
+    // Строка с данными
+    dataRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "0.5rem",
+      fontFamily: typography.fonts.rooftop,
+      fontSize: "1rem",
+    },
+
+    // Футер страницы PDF
+    pageFooter: {
+      marginTop: "auto",
+      fontFamily: typography.fonts.cofoSansMono,
+      fontSize: "0.75rem",
+      color: colors.brand.black,
+      textTransform: "uppercase",
+    },
+  },
 };
 
 /**

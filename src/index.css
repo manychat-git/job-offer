@@ -2,8 +2,8 @@
 
 /* Define font faces */
 @font-face {
-  font-family: 'Manychat_Gravity';
-  src: local('Manychat_Gravity'),
+  font-family: "Manychat Gravity";
+  src: local("Manychat Gravity"),
        url('/fonts/Manychat_Gravity.otf') format('opentype'),
        url('/fonts/Manychat_Gravity.otf') format('truetype');
   font-weight: 900;
@@ -24,12 +24,14 @@
 }
 
 @font-face {
-  font-family: 'CoFo_Sans_Mono';
-  src: local('CoFo_Sans_Mono'),
+  font-family: "CoFo Sans Mono";
+  src: local("CoFo Sans Mono"),
        url('/fonts/CoFoSansMono-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Safari-specific font rendering fix */
@@ -37,12 +39,26 @@
   @supports (-webkit-appearance:none) {
     .font-\[\'Manychat_Gravity\'\],
     .font-manychatGravity { 
-      font-family: 'Manychat_Gravity', sans-serif !important;
+      font-family: "Manychat Gravity", sans-serif !important;
+      font-feature-settings: "rlig" 1, "calt" 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+    .font-\[\'CoFo_Sans_Mono\'\],
+    .font-cofoSansMono {
+      font-family: "CoFo Sans Mono", monospace !important;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
     }
   }
+}
+
+/* Override stylistic sets for Manychat Gravity globally */
+.font-\[\'Manychat_Gravity\'\],
+.font-manychatGravity {
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
 /* Define the Shadcn UI CSS Variables */

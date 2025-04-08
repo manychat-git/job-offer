@@ -21,6 +21,61 @@
         src: url('/fonts/CoFoSansMono-Regular.woff2') format('woff2');
       }
 
+      /* Mobile message styles */
+      .mobile-message {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--background);
+        z-index: 9999;
+        padding: 2rem;
+        text-align: center;
+        font-family: 'Rooftop', sans-serif;
+        color: var(--foreground);
+      }
+
+      .mobile-message-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 400px;
+      }
+
+      .mobile-message h1 {
+        font-family: 'Manychat_Gravity', sans-serif;
+        font-size: 2.8rem;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .mobile-message p {
+        font-size: 1.125rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+      }
+
+      .mobile-message .emoji {
+        font-size: 3rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 1023px) {
+        .mobile-message {
+          display: block;
+        }
+        
+        #app-root, 
+        .header {
+          display: none !important;
+        }
+      }
+
       /* Стили для хедера */
       .header {
         display: flex;
@@ -58,6 +113,14 @@
     </style>
   </head>
   <body>
+    <div class="mobile-message">
+      <div class="mobile-message-content">
+        <div class="emoji">✨</div>
+        <h1>Desktop Magic Only!</h1>
+        <p>This job offer generator is crafted specifically for desktop experience to ensure perfect PDF generation. 🎨</p>
+        <p>Grab your computer and join us for the full experience! 💻</p>
+      </div>
+    </div>
     <header class="header">
       <img src="/public/images/logo-main.svg" alt="ManyChat" class="logo" />
       <div id="content-editor-root"></div>

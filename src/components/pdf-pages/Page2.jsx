@@ -70,7 +70,7 @@ const Page2 = ({
       value: jobData.probationPeriod.value 
     },
     jobData.signInBonus.isVisible && { 
-      label: "Sign-in bonus", 
+      label: "Sign-in gross bonus", 
       valueComponent: moneyValue(jobData.signInBonus.value)
     },
     jobData.stockOptions.isVisible && { 
@@ -78,7 +78,7 @@ const Page2 = ({
       value: jobData.stockOptions.value 
     },
     jobData.annualBonus.isVisible && { 
-      label: "Annual bonus", 
+      label: "Annual gross bonus", 
       valueComponent: moneyValue(jobData.annualBonus.value)
     }
   ].filter(Boolean);

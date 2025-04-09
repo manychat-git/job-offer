@@ -244,7 +244,7 @@ export function JobOfferForm({ formData = defaultFormData, onChange, onDownload 
             <div className="grid gap-2">
               <div className="flex flex-col rounded-lg border">
                 <div className="flex items-center justify-between p-4">
-                  <Label htmlFor="signInBonus">Sign-in Bonus</Label>
+                  <Label htmlFor="signInBonus">Sign-in Gross Bonus</Label>
                   <Switch
                     id="signInBonus"
                     checked={safeFormData.jobData.signInBonus.isVisible}
@@ -290,7 +290,7 @@ export function JobOfferForm({ formData = defaultFormData, onChange, onDownload 
             <div className="grid gap-2">
               <div className="flex flex-col rounded-lg border">
                 <div className="flex items-center justify-between p-4">
-                  <Label htmlFor="annualBonus">Annual Bonus</Label>
+                  <Label htmlFor="annualBonus">Annual Gross Bonus</Label>
                   <Switch
                     id="annualBonus"
                     checked={safeFormData.jobData.annualBonus.isVisible}

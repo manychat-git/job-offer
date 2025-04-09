@@ -705,7 +705,7 @@ export function ContentEditor() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Data</Button>
+        <Button variant="outline" disabled>Edit data [SOON]</Button>
       </DialogTrigger>
       <DialogContent className="!max-w-4xl max-h-[80vh] overflow-hidden p-0">
         <div className="flex flex-col h-[80vh]">

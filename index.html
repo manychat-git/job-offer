@@ -21,6 +21,71 @@
         src: url('/fonts/CoFoSansMono-Regular.woff2') format('woff2');
       }
 
+      /* Auth overlay styles */
+      .auth-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--background);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Rooftop', sans-serif;
+      }
+
+      .auth-container {
+        background-color: var(--card);
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        border: 1px solid var(--border);
+      }
+
+      .auth-container h1 {
+        font-family: 'Manychat_Gravity', sans-serif;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+      }
+
+      .auth-container input {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        background-color: var(--background);
+        color: var(--foreground);
+        font-family: 'Rooftop', sans-serif;
+      }
+
+      .auth-container button {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-family: 'Rooftop', sans-serif;
+        transition: opacity 0.2s;
+      }
+
+      .auth-container button:hover {
+        opacity: 0.9;
+      }
+
+      .auth-error {
+        color: var(--destructive);
+        margin-top: 1rem;
+        font-size: 0.875rem;
+      }
+
       /* Mobile message styles */
       .mobile-message {
         display: none;
@@ -113,6 +178,17 @@
     </style>
   </head>
   <body>
+    <div id="auth-overlay" class="auth-overlay">
+      <div class="auth-container">
+        <h1>Welcome!</h1>
+        <input type="password" id="auth-password" placeholder="Enter password" />
+        <button onclick="authenticate()">Continue</button>
+        <div id="auth-error" class="auth-error" style="display: none;">
+          Incorrect password. Please try again.
+        </div>
+      </div>
+    </div>
+
     <div class="mobile-message">
       <div class="mobile-message-content">
         <div class="emoji">✨</div>
@@ -127,5 +203,32 @@
     </header>
     <div id="app-root"></div>
     <script type="module" src="/src/lib/app-main.jsx"></script>
+    <script>
+      // Simple authentication
+      function authenticate() {
+        const password = document.getElementById('auth-password').value;
+        const correctPassword = 'manychat2024'; // This should be changed to a more secure password
+        
+        if (password === correctPassword) {
+          document.getElementById('auth-overlay').style.display = 'none';
+          // Store auth state
+          sessionStorage.setItem('authenticated', 'true');
+        } else {
+          document.getElementById('auth-error').style.display = 'block';
+        }
+      }
+
+      // Check if already authenticated
+      if (sessionStorage.getItem('authenticated') === 'true') {
+        document.getElementById('auth-overlay').style.display = 'none';
+      }
+
+      // Handle Enter key
+      document.getElementById('auth-password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          authenticate();
+        }
+      });
+    </script>
   </body>
 </html>

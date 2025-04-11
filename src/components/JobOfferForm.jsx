@@ -41,7 +41,7 @@ const defaultFormData = {
     },
     stockOptions: { value: "Value", isVisible: false },
     annualBonus: { value: "000", isVisible: false },
-    postProbationSalary: { value: "000", isVisible: true }
+    postRelocationSalary: { value: "000", isVisible: true }
   }
 };
 
@@ -57,7 +57,7 @@ export function JobOfferForm({ formData = defaultFormData, onChange }) {
         ...formData?.jobData?.signInBonus,
         paymentPeriod: formData?.jobData?.signInBonus?.paymentPeriod || "1"
       },
-      postProbationSalary: formData?.jobData?.postProbationSalary || { value: "000", isVisible: true }
+      postRelocationSalary: formData?.jobData?.postRelocationSalary || { value: "000", isVisible: true }
     }
   };
 
@@ -377,19 +377,19 @@ export function JobOfferForm({ formData = defaultFormData, onChange }) {
             <div className="grid gap-2">
               <div className="flex flex-col rounded-lg border">
                 <div className="flex items-center justify-between p-4">
-                  <Label htmlFor="postProbationSalary">Post-probation Salary</Label>
+                  <Label htmlFor="postRelocationSalary">Reveal post-relocation salary</Label>
                   <Switch
-                    id="postProbationSalary"
-                    checked={safeFormData.jobData.postProbationSalary.isVisible}
-                    onCheckedChange={(checked) => handleVisibilityChange('postProbationSalary', checked)}
+                    id="postRelocationSalary"
+                    checked={safeFormData.jobData.postRelocationSalary.isVisible}
+                    onCheckedChange={(checked) => handleVisibilityChange('postRelocationSalary', checked)}
                   />
                 </div>
-                {safeFormData.jobData.postProbationSalary.isVisible && (
+                {safeFormData.jobData.postRelocationSalary.isVisible && (
                   <div className="px-4 pb-4">
                     <Input
-                      name="postProbationSalary"
-                      value={safeFormData.jobData.postProbationSalary.value}
-                      onChange={(e) => handleOptionalFieldChange('postProbationSalary', e.target.value)}
+                      name="postRelocationSalary"
+                      value={safeFormData.jobData.postRelocationSalary.value}
+                      onChange={(e) => handleOptionalFieldChange('postRelocationSalary', e.target.value)}
                       placeholder="e.g. 60,000"
                     />
                   </div>

@@ -25,7 +25,7 @@ const Page2 = ({
     },
     stockOptions: { value: "", isVisible: false },
     annualBonus: { value: "", isVisible: false },
-    postProbationSalary: { value: "", isVisible: false }
+    postRelocationSalary: { value: "", isVisible: false }
   },
   pageNumber,
   totalPages
@@ -135,8 +135,8 @@ const Page2 = ({
     <>
       <div className="self-stretch relative inline-flex justify-between items-start">
         <div className="flex-1 inline-flex flex-col justify-start items-start">
-          <PageTitle style={{ color: colors.brand.amethyst }}>
-            Let's talk <br/>numbers
+          <PageTitle style={{ color: colors.brand.amethyst, width: "400px" }}>
+            Let's talk<br/>numbers
           </PageTitle>
         </div>
         <div className="left-[431px] top-0 absolute w-[124px] h-[22px]">
@@ -162,10 +162,10 @@ const Page2 = ({
             ))}
           </div>
 
-          {(jobData.postProbationSalary?.isVisible ?? true) && (
+          {(jobData.postRelocationSalary?.isVisible ?? true) && (
             <div className="w-[500px] px-5 py-4 bg-white rounded-[32px] flex flex-col justify-start items-start">
               <div className="self-stretch justify-start text-black text-base font-normal font-['Rooftop'] leading-[125%] break-words">
-                After you move to Barcelona, your annual gross salary will be {jobData.postProbationSalary?.value || "000"} {jobData.currency} after you successfully complete the probation period.
+                After you move to Barcelona, your annual gross salary will be {jobData.postRelocationSalary?.value || "000"} {jobData.currency}.
               </div>
             </div>
           )}

@@ -377,7 +377,7 @@ export function JobOfferForm({ formData = defaultFormData, onChange }) {
             <div className="grid gap-2">
               <div className="flex flex-col rounded-lg border">
                 <div className="flex items-center justify-between p-4">
-                  <Label htmlFor="postRelocationSalary">Reveal post-relocation salary</Label>
+                  <Label htmlFor="postRelocationSalary">Reveal Post-relocation Salary</Label>
                   <Switch
                     id="postRelocationSalary"
                     checked={safeFormData.jobData.postRelocationSalary.isVisible}

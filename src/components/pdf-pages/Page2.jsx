@@ -17,7 +17,12 @@ const Page2 = ({
     salary: "",
     currency: "EUR",
     probationPeriod: { value: "", isVisible: false },
-    signInBonus: { value: "", isVisible: false },
+    signInBonus: { 
+      value: "", 
+      isVisible: false,
+      paymentPeriod: "1",
+      showPaymentPeriodText: true 
+    },
     stockOptions: { value: "", isVisible: false },
     annualBonus: { value: "", isVisible: false },
     postProbationSalary: { value: "", isVisible: false }
@@ -40,20 +45,48 @@ const Page2 = ({
     }
   };
 
-  const moneyValue = (amount, currency = jobData.currency) => (
-    <div className="flex justify-start items-start gap-1">
-      <div 
-        className="justify-start text-base font-normal font-['Rooftop'] leading-[125%] break-words"
-        style={{ color: colors.brand.black }}
-      >
-        {amount}
+  const moneyValue = (amount, currency = jobData.currency, options = {}) => (
+    <div className="flex flex-col gap-0.5">
+      <div className="flex justify-start items-start gap-1">
+        <div 
+          className="justify-start text-base font-normal font-['Rooftop'] leading-[125%] break-words"
+          style={{ color: colors.brand.black }}
+        >
+          {amount}
+        </div>
+        <div 
+          className="flex-1 justify-start text-base font-normal font-['Rooftop'] leading-[125%] break-words"
+          style={{ color: colors.brand.black }}
+        >
+          {currency}
+        </div>
       </div>
-      <div 
-        className="flex-1 justify-start text-base font-normal font-['Rooftop'] leading-[125%] break-words"
-        style={{ color: colors.brand.black }}
-      >
-        {currency}
-      </div>
+      {/* Добавляем условный рендеринг для периода выплаты */}
+      {options?.showPaymentPeriod && (
+        <div 
+          className="font-['Rooftop']"
+          style={{ 
+            fontSize: '8px',
+            lineHeight: '90%',
+            color: colors.brand.black 
+          }}
+        >
+          paid after the {options?.paymentPeriod === "1" ? "first" : "second"} month
+        </div>
+      )}
+      {/* Добавляем текст о holiday allowance для Amsterdam */}
+      {options?.showHolidayAllowance && (
+        <div 
+          className="font-['Rooftop']"
+          style={{ 
+            fontSize: '8px',
+            lineHeight: '90%',
+            color: colors.brand.black 
+          }}
+        >
+          8% holiday allowance included
+        </div>
+      )}
     </div>
   );
 
@@ -65,14 +98,28 @@ const Page2 = ({
     { label: "Job title", value: jobData.jobTitle },
     { label: "Start date", value: jobData.startDate },
     { label: "Location", value: locationLabel },
-    { label: "Annual gross salary", valueComponent: moneyValue(jobData.salary) },
+    { 
+      label: "Annual gross salary", 
+      valueComponent: moneyValue(
+        jobData.salary,
+        jobData.currency,
+        { showHolidayAllowance: jobData.location === 'amsterdam' }
+      ) 
+    },
     jobData.probationPeriod.isVisible && { 
       label: "Probation period", 
       value: jobData.probationPeriod.value 
     },
     jobData.signInBonus.isVisible && { 
       label: "Sign-in gross bonus", 
-      valueComponent: moneyValue(jobData.signInBonus.value)
+      valueComponent: moneyValue(
+        jobData.signInBonus.value,
+        jobData.currency,
+        { 
+          showPaymentPeriod: jobData.signInBonus.showPaymentPeriodText,
+          paymentPeriod: jobData.signInBonus.paymentPeriod
+        }
+      )
     },
     jobData.stockOptions.isVisible && { 
       label: "Stock options", 

@@ -20,6 +20,7 @@ export function App() {
       annualBonus: { value: '000', isVisible: false }
     }
   });
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleFormChange = (newData) => {
     setFormData(newData);
@@ -27,9 +28,12 @@ export function App() {
 
   const handleDownloadClick = async () => {
     try {
+      setIsGenerating(true);
       await downloadPdf();
     } catch (error) {
       console.error('Error downloading PDF:', error);
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -43,6 +47,8 @@ export function App() {
               name={formData.name}
               jobData={formData.jobData}
               company={formData.company}
+              onDownload={handleDownloadClick}
+              isGenerating={isGenerating}
             />
           </div>
 

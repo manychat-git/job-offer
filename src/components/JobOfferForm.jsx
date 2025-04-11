@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Button } from './ui/button.tsx';
 import { Switch } from './ui/switch';
+import { Checkbox } from "./ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -11,10 +11,13 @@ import {
   SelectValue,
 } from "./ui/select";
 import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "./ui/toggle-group";
+import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -30,22 +33,30 @@ const defaultFormData = {
     salary: "000",
     currency: "EUR",
     probationPeriod: { value: "", isVisible: false },
-    signInBonus: { value: "000", isVisible: false },
+    signInBonus: { 
+      value: "000", 
+      isVisible: false, 
+      paymentPeriod: "1",
+      showPaymentPeriodText: true 
+    },
     stockOptions: { value: "Value", isVisible: false },
     annualBonus: { value: "000", isVisible: false },
     postProbationSalary: { value: "000", isVisible: true }
   }
 };
 
-export function JobOfferForm({ formData = defaultFormData, onChange, onDownload }) {
-  const [isGenerating, setIsGenerating] = useState(false);
-
+export function JobOfferForm({ formData = defaultFormData, onChange }) {
   const safeFormData = {
     ...defaultFormData,
     ...formData,
     jobData: {
       ...defaultFormData.jobData,
       ...formData?.jobData,
+      signInBonus: {
+        ...defaultFormData.jobData.signInBonus,
+        ...formData?.jobData?.signInBonus,
+        paymentPeriod: formData?.jobData?.signInBonus?.paymentPeriod || "1"
+      },
       postProbationSalary: formData?.jobData?.postProbationSalary || { value: "000", isVisible: true }
     }
   };
@@ -116,17 +127,6 @@ export function JobOfferForm({ formData = defaultFormData, onChange, onDownload 
         }
       }
     });
-  };
-
-  const handleDownload = async () => {
-    try {
-      setIsGenerating(true);
-      await onDownload();
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-    } finally {
-      setIsGenerating(false);
-    }
   };
 
   return (
@@ -258,13 +258,71 @@ export function JobOfferForm({ formData = defaultFormData, onChange, onDownload 
                   />
                 </div>
                 {safeFormData.jobData.signInBonus.isVisible && (
-                  <div className="px-4 pb-4">
+                  <div className="px-4 pb-4 space-y-4">
                     <Input
                       name="signInBonus"
                       value={safeFormData.jobData.signInBonus.value}
                       onChange={(e) => handleOptionalFieldChange('signInBonus', e.target.value)}
                       placeholder="e.g. 5,000"
                     />
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="showPaymentPeriodText"
+                        checked={safeFormData.jobData.signInBonus.showPaymentPeriodText}
+                        onCheckedChange={(checked) => {
+                          onChange({
+                            ...safeFormData,
+                            jobData: {
+                              ...safeFormData.jobData,
+                              signInBonus: {
+                                ...safeFormData.jobData.signInBonus,
+                                showPaymentPeriodText: checked
+                              }
+                            }
+                          });
+                        }}
+                      />
+                      <Label 
+                        htmlFor="showPaymentPeriodText" 
+                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-1"
+                      >
+                        <span>paid after the</span>
+                        <ToggleGroup
+                          type="single"
+                          value={safeFormData.jobData.signInBonus.paymentPeriod}
+                          onValueChange={(value) => {
+                            if (value) {
+                              onChange({
+                                ...safeFormData,
+                                jobData: {
+                                  ...safeFormData.jobData,
+                                  signInBonus: {
+                                    ...safeFormData.jobData.signInBonus,
+                                    paymentPeriod: value
+                                  }
+                                }
+                              });
+                            }
+                          }}
+                          className="inline-flex h-auto bg-transparent p-0 gap-1"
+                        >
+                          <ToggleGroupItem 
+                            value="1" 
+                            className="h-auto px-1 py-0 rounded-sm data-[state=on]:bg-transparent data-[state=on]:text-primary data-[state=on]:underline hover:bg-transparent cursor-pointer"
+                          >
+                            first
+                          </ToggleGroupItem>
+                          <span>/</span>
+                          <ToggleGroupItem 
+                            value="2" 
+                            className="h-auto px-1 py-0 rounded-sm data-[state=on]:bg-transparent data-[state=on]:text-primary data-[state=on]:underline hover:bg-transparent cursor-pointer"
+                          >
+                            second
+                          </ToggleGroupItem>
+                        </ToggleGroup>
+                        <span>month</span>
+                      </Label>
+                    </div>
                   </div>
                 )}
               </div>
@@ -361,36 +419,6 @@ export function JobOfferForm({ formData = defaultFormData, onChange, onDownload 
           </div>
         </form>
       </CardContent>
-      <CardFooter>
-        <Button 
-          onClick={handleDownload}
-          variant="default"
-          size="lg"
-          className="w-full"
-          loading={isGenerating}
-          disabled={isGenerating}
-        >
-          {!isGenerating && (
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              className="mr-2"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-          )}
-          {isGenerating ? 'Generating PDF...' : 'Download PDF'}
-        </Button>
-      </CardFooter>
     </Card>
   );
 } 

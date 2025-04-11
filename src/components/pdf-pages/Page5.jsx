@@ -25,7 +25,7 @@ const Page5 = ({ pageNumber, totalPages }) => {
       <div className="self-stretch flex flex-col justify-start items-start">
         <div className="self-stretch flex flex-col justify-start items-start gap-0.5">
           <div className="px-5 py-4 bg-white rounded-3xl flex flex-col justify-start items-start gap-1">
-            <div className="w-96 justify-start text-black text-lg font-normal font-['Rooftop'] leading-tight">
+            <div className="w-96 justify-start text-black text-base font-normal font-['Rooftop'] leading-[125%]">
               We're looking forward to you joining!  🎉<br/>Now, it's your move. 🙌
             </div>
           </div>

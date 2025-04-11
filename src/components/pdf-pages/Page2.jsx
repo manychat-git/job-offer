@@ -19,7 +19,8 @@ const Page2 = ({
     probationPeriod: { value: "", isVisible: false },
     signInBonus: { value: "", isVisible: false },
     stockOptions: { value: "", isVisible: false },
-    annualBonus: { value: "", isVisible: false }
+    annualBonus: { value: "", isVisible: false },
+    postProbationSalary: { value: "", isVisible: false }
   },
   pageNumber,
   totalPages
@@ -42,13 +43,13 @@ const Page2 = ({
   const moneyValue = (amount, currency = jobData.currency) => (
     <div className="flex justify-start items-start gap-1">
       <div 
-        className="justify-start text-lg font-normal font-['Rooftop'] leading-tight break-words"
+        className="justify-start text-base font-normal font-['Rooftop'] leading-[125%] break-words"
         style={{ color: colors.brand.black }}
       >
         {amount}
       </div>
       <div 
-        className="flex-1 justify-start text-lg font-normal font-['Rooftop'] leading-tight break-words"
+        className="flex-1 justify-start text-base font-normal font-['Rooftop'] leading-[125%] break-words"
         style={{ color: colors.brand.black }}
       >
         {currency}
@@ -113,6 +114,14 @@ const Page2 = ({
               />
             ))}
           </div>
+
+          {(jobData.postProbationSalary?.isVisible ?? true) && (
+            <div className="w-[500px] px-5 py-4 bg-white rounded-[32px] flex flex-col justify-start items-start">
+              <div className="self-stretch justify-start text-black text-base font-normal font-['Rooftop'] leading-[125%] break-words">
+                After you move to Barcelona, your annual gross salary will be {jobData.postProbationSalary?.value || "000"} {jobData.currency} after you successfully complete the probation period.
+              </div>
+            </div>
+          )}
 
           <div className="w-[48px] h-[48px]">
             <ManyIcon />

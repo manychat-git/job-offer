@@ -10,11 +10,11 @@ const InfoRow = ({
   borderColor
 }) => (
   <div 
-    className={`self-stretch ${!isLast ? 'border-b' : ''} inline-flex justify-start items-start py-2`}
+    className={`self-stretch ${!isLast ? 'border-b' : ''} inline-flex justify-start items-start py-[6px]`}
     style={!isLast ? { borderColor: borderColor || colors.brand.vividOrange } : undefined}
   >
     <div 
-      className="w-64 justify-start text-lg font-normal font-['Rooftop'] leading-tight"
+      className="w-64 justify-start text-base font-normal font-['Rooftop'] leading-[125%]"
       style={{ 
         color: labelColor || colors.brand.vividOrange,
         overflowWrap: 'break-word',
@@ -25,7 +25,7 @@ const InfoRow = ({
       {label}
     </div>
     <div 
-      className="flex-1 justify-start text-lg font-normal font-['Rooftop'] leading-tight"
+      className="flex-1 justify-start text-base font-normal font-['Rooftop'] leading-[125%]"
       style={{ 
         color: colors.brand.black,
         overflowWrap: 'break-word',

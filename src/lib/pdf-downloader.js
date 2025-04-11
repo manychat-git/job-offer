@@ -69,8 +69,17 @@ export async function downloadPdf() {
     window.pdfCurrentPage = originalPage;
     window.dispatchEvent(pdfPageChangeEvent);
     
+    // Get form data for filename
+    const name = document.querySelector('[name="name"]')?.value || 'Unknown';
+    const jobTitle = document.querySelector('[name="jobTitle"]')?.value || 'Unknown';
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0].replace(/-/g, '-');
+    
+    // Format filename
+    const filename = `${name}_${jobTitle}_Offer_${formattedDate}.pdf`;
+    
     // Download the PDF
-    pdf.save('job-offer.pdf');
+    pdf.save(filename);
     
   } catch (error) {
     console.error('Error generating PDF:', error);

@@ -165,7 +165,8 @@ const Page2 = ({
           {(jobData.postRelocationSalary?.isVisible ?? true) && (
             <div className="w-[500px] px-5 py-4 bg-white rounded-[32px] flex flex-col justify-start items-start">
               <div className="self-stretch justify-start text-black text-base font-normal font-['Rooftop'] leading-[125%] break-words">
-                After you move to Barcelona, your annual gross salary will be {jobData.postRelocationSalary?.value || "000"} {jobData.currency}.
+              After you move to Barcelona, your annual gross salary will be {jobData.postRelocationSalary?.value || "000"} {jobData.currency} after you successfully complete the probation period.
+
               </div>
             </div>
           )}

@@ -38,7 +38,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-background">
+    <div className="min-h-screen p-8 pb-32 bg-background">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row gap-8 items-start justify-center max-w-[1400px] mx-auto">
           {/* Preview */}

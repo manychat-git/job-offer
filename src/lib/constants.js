@@ -22,28 +22,28 @@ export const COMPANIES = [
 
 export const STATISTICS = [
   {
-    title: "#1 Platform",
-    description: "Manychat is the most used Chat Marketing Platform"
+    title: "#1 Chat Marketing Platform",
+    description: "Manychat is used and loved by 1M+ customers in 170+ countries."
   },
   {
-    title: "1B+ Conversations",
-    description: "powered by Manychat in the last year"
+    title: "International team",
+    description: "Spread across five global offices on three continents."
   },
   {
-    title: "200+ \nTop talents",
-    description: "on the Manychat team"
+    title: "Culture of partnership",
+    description: "We value open feedback and genuine care."
   },
   {
-    title: "1M+ Customers",
-    description: "use Manychat for marketing, sales, and support"
+    title: "Work with purpose",
+    description: "Every idea, big or small, drives innovation here."
   },
   {
-    title: "170+\nCountries",
-    description: "use Manychat worldwide"
+    title: "Growth opportunities",
+    description: "You'll move forward, with support on the way."
   },
   {
-    title: "Global team",
-    description: "in Spain, Armenia, Netherlands, USA, and Brazil"
+    title: "Freedom to create",
+    description: "We trust you to do great things here."
   }
 ];
 

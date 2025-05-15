@@ -3,7 +3,8 @@ export const LOCATIONS = [
   { value: "yerevan", label: "Yerevan, Armenia" },
   { value: "amsterdam", label: "Amsterdam, Netherlands" },
   { value: "sao_paolo", label: "São Paolo, Brazil" },
-  { value: "honduras", label: "Honduras, Central America" }
+  { value: "honduras", label: "Honduras, Central America" },
+  { value: "austin", label: "Austin, TX, United States" }
 ];
 
 export const CURRENCIES = [
@@ -271,6 +272,53 @@ export const BENEFITS = {
       emoji: "🧩",
       title: "Flexible benefits package",
       description: "Customize your own perks—from home office setups to wellness programs, and much more."
+    }
+  ],
+  austin: [
+    {
+      emoji: "🪴",
+      title: "Hybrid work",
+      description: "Enjoy the mix of working from the comfort of your home or our fun, dynamic office."
+    },
+    {
+      emoji: "🌴",
+      title: "Generous leave options",
+      description: "Prioritize work-life balance with flexible time off policy and paid public holidays."
+    },
+    {
+      emoji: "💚",
+      title: "Health Insurance",
+      description: "Have peace of mind with comprehensive medical coverage for you and 50% cost coverage for your partner and your kids."
+    },
+    {
+      emoji: "📚",
+      title: "Continuous learning",
+      description: "Annual professional development reimbursement for conferences, training, courses, and essential literature."
+    },
+    {
+      emoji: "🌮",
+      title: "Office lunches",
+      description: "Fuel up with free meals and snacks, ensuring you're energized throughout the day."
+    },
+    {
+      emoji: "🛡️",
+      title: "Life insurance",
+      description: "Protect your loved ones with our basic life insurance and AD&D coverage."
+    },
+    {
+      emoji: "💻",
+      title: "Premium equipment",
+      description: "Get a top-tier laptop for your comfort and productivity."
+    },
+    {
+      emoji: "🏀",
+      title: "Sport support",
+      description: "Connect with colleagues through on-site, company-funded sports activities."
+    },
+    {
+      emoji: "👋",
+      title: "Team building events",
+      description: "Get to know your team through enjoyable activities, lunches, and outings."
     }
   ]
 };

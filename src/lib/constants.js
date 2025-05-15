@@ -95,14 +95,9 @@ export const BENEFITS = {
       description: "Get to know your team through enjoyable activities, lunches, and outings."
     },
     {
-      emoji: "📦",
+      emoji: "🇪🇸",
       title: "Spanish classes",
       description: "Enhance your cultural experience—attend free lessons in the office to help you fully enjoy living in Barcelona."
-    },
-    {
-      emoji: "🛍",
-      title: "Employee discounts",
-      description: "Enjoy multiple discounts in various shops with our savings program."
     }
   ],
   yerevan: [
